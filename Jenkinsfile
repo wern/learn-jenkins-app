@@ -55,7 +55,7 @@ pipeline {
                     ls -la
                     node --version
                     npm --version
-                    npm install -g serve
+                    npm install serve
                     serve -s build
                     npx playwright test
 
