@@ -4,7 +4,7 @@ pipeline {
     stages {
         /*
          * This is the Build Stage
-         *
+         */
         stage('Build') {
             // Configuriomg a Docker based agent
             agent {
@@ -23,7 +23,7 @@ pipeline {
                     ls -la
                 ''' 
             }
-        } */
+        }
 
          stage('Test') {
             agent {
