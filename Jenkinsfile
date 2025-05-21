@@ -61,19 +61,6 @@ pipeline {
 
                 '''
             }
-        }'
-                    reuseNode true
-                }
-            }
-            steps {
-                sh '''
-                    ls -la
-                    node --version
-                    npm --version
-                    test build/index.html
-                    npm test
-                '''
-            }
         }
     }
 
