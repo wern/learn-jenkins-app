@@ -24,7 +24,7 @@ pipeline {
                 ''' 
             }
         } 
-        atage('Run Tests') {
+        stage('Run Tests') {
             parallel {
                 stage('Unittests') {
                     agent {
