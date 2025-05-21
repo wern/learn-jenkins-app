@@ -2,14 +2,18 @@ pipeline {
     agent any
 
     stages {
+        /*
+         * This is the Build Stage
+         *
         stage('Build') {
+            // Configuriomg a Docker based agent
             agent {
                 docker {
                     image 'node:18-alpine'
                     reuseNode true
                 }
             }
-            steps {
+            steps { 
                 sh '''
                     ls -la
                     node --version
@@ -17,9 +21,9 @@ pipeline {
                     npm ci
                     npm run build
                     ls -la
-                '''
+                ''' 
             }
-        }
+        } */
 
          stage('Test') {
             agent {
