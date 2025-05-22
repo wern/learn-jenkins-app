@@ -75,5 +75,20 @@ pipeline {
                 }
             }
         }
+        stage('Deploy') {
+            // Configuriomg a Docker based agent
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                    reuseNode true
+                }
+            }
+            steps { 
+                sh '''
+                    npm install netlifly-cli -g
+                    netlifly --version
+                ''' 
+            }
+        } 
     }
 }
