@@ -85,8 +85,8 @@ pipeline {
             }
             steps { 
                 sh '''
-                    npm install netlifly-cli -g
-                    netlifly --version
+                    npm install netlifly-cli
+                    node_modules/.bin/netlifly --version
                 ''' 
             }
         } 
