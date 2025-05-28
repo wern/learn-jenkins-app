@@ -80,7 +80,49 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
+        stage('Staging Deploy') {
+            // Configuriomg a Docker based agent
+            agent {
+                docker {
+                    image 'node:18-alpine'
+                    reuseNode true
+                }
+            }
+            steps { 
+                sh '''
+                    npm install netlify-cli@20.1.1
+                    node_modules/.bin/netlify --version
+                    echo "Deploying to STAGING site Id: $NETLIFY_SITE_ID"
+                    node_modules/.bin/netlify status
+                    node_modules/.bin/netlify deploy --dir=build 
+                ''' 
+            }
+        } 
+        stage('Staging E2E') {
+            environment {
+                CI_ENVIRONMENT_URL='https://heroic-belekoy-7c11cd.netlify.app'
+            }     
+            agent {
+                docker {
+                    image 'mcr.microsoft.com/playwright:v1.52.0-noble'
+                    reuseNode true
+                }
+            }
+            steps {
+                sh '''
+                    ls -la
+                    node --version
+                    npm --version
+                    npx playwright test --reporter=html
+                '''
+            }
+            post {
+                always {
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright Staging E2E', reportTitles: '', useWrapperFileDirectly: true])
+                }
+            }
+        }
+        stage('Prod Deploy') {
             // Configuriomg a Docker based agent
             agent {
                 docker {
