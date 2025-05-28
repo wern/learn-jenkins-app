@@ -100,7 +100,7 @@ pipeline {
         } 
 
         stage('Prod E2E') {
-            environment {#
+            environment {
                 CI_ENVIRONMENT_URL='https://heroic-belekoy-7c11cd.netlify.app'
             }     
             agent {
