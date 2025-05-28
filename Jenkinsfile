@@ -122,6 +122,13 @@ pipeline {
                 }
             }
         }
+        stage('Approval') {
+            steps {
+                timeout(time: 30, unit: 'SECONDS') {
+                    input cancel: 'Do not deploy', message: 'Ready to deploy?', ok: 'Yes, I want to deploy'
+                }
+            }
+        }
         stage('Prod Deploy') {
             // Configuriomg a Docker based agent
             agent {
