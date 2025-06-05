@@ -123,6 +123,9 @@ pipeline {
         }
 
         stage('Deploy Prod') {
+            environment {
+                CI_ENVIRONMENT_URL="https://heroic-belekoy-7c11cd.netlify.app"
+            } 
             agent {
                 docker {
                     image 'mcr.microsoft.com/playwright:v1.52.0-noble'
