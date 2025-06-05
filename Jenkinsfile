@@ -133,26 +133,8 @@ pipeline {
                 }
             }
         }
-        stage('Prod Deploy') {
-            // Configuriomg a Docker based agent
-            agent {
-                docker {
-                    image 'node:18-alpine'
-                    reuseNode true
-                }
-            }
-            steps { 
-                sh '''
-                    npm install netlify-cli@20.1.1
-                    node_modules/.bin/netlify --version
-                    echo "Deploying to PROD site Id: $NETLIFY_SITE_ID"
-                    node_modules/.bin/netlify status
-                    node_modules/.bin/netlify deploy --dir=build --prod
-                ''' 
-            }
-        } 
 
-        stage('Prod E2E') {
+        stage('Deploy Prod') {
             environment {
                 CI_ENVIRONMENT_URL='https://heroic-belekoy-7c11cd.netlify.app'
             }     
@@ -167,6 +149,15 @@ pipeline {
                     ls -la
                     node --version
                     npm --version
+                    
+                    echo "Deploying..."
+                    npm install netlify-cli@20.1.1
+                    node_modules/.bin/netlify --version
+                    echo "Deploying to PROD site Id: $NETLIFY_SITE_ID"
+                    node_modules/.bin/netlify status
+                    node_modules/.bin/netlify deploy --dir=build --prod
+                    
+                    echo "Running E2E tests..."
                     npx playwright test --reporter=html
                 '''
             }
