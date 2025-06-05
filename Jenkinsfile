@@ -116,6 +116,7 @@ pipeline {
                     ls -la
                     node --version
                     npm --version
+                    echo "Testing against $CI_ENVIRONMENT_URL"
                     npx playwright test --reporter=html
                 '''
             }
