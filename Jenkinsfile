@@ -95,13 +95,15 @@ pipeline {
                     echo "Deploying to STAGING site Id: $NETLIFY_SITE_ID"
                     node_modules/.bin/netlify status
                     node_modules/.bin/netlify deploy --dir=build --json > deploy-staging.json
-                    node_modules/.bin/node-jq -r '.deploy_url' deploy-staging.json 
                 ''' 
+                script {
+                    env.STAGING_URL = sh(script:"node_modules/.bin/node-jq -r '.deploy_url' deploy-staging.json", returnStdout: true)
+                }
             }
         } 
         stage('Staging E2E') {
             environment {
-                CI_ENVIRONMENT_URL='https://heroic-belekoy-7c11cd.netlify.app'
+                CI_ENVIRONMENT_URL='$STAGING_URL'
             }     
             agent {
                 docker {
