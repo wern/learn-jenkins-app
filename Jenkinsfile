@@ -4,6 +4,7 @@ pipeline {
     environment {
         NETLIFY_SITE_ID='9ed2dbab-b7bb-4182-be91-7fdabb58894c'
         NETLIFY_AUTH_TOKEN=credentials('netlify-token')
+        REACT_APP_VERSION = '1.2.3'
     }
     stages {
         /*
@@ -114,6 +115,8 @@ pipeline {
                 }
             }
         }
+
+        /*
         stage('Approval') {
             steps {
                 timeout(time: 600, unit: 'SECONDS') {
@@ -121,6 +124,7 @@ pipeline {
                 }
             }
         }
+        */
 
         stage('Deploy Prod') {
             environment {
